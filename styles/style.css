@@ -1,0 +1,36 @@
+.container {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 22% 12% 12% 12% 12% 18%;
+    width: 500px;
+    height: 720px;
+    margin: auto;
+  }
+
+  .calc-display {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    background-color: red;
+  }
+
+  .calc-clear-button {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    grid-row-start: 7;
+    grid-row-end: 8;
+    background-color: yellow;
+  }
+
+  .border {
+      outline: 1px solid black;
+  }
+
+  .numb-btn {
+
+  }
+
+  .operand-btn {
+
+  }
