@@ -1,26 +1,18 @@
-.container {
-    display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
-    grid-template-rows: 22% 12% 12% 12% 12% 18%;
-    width: 500px;
-    height: 720px;
-    margin: auto;
+  html {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 35px;
+    background-color: #240505;
   }
 
-  .calc-display {
+  #calc-display {
     grid-column-start: 1;
     grid-column-end: 5;
     grid-row-start: 1;
     grid-row-end: 2;
-    background-color: red;
-  }
-
-  .calc-clear-button {
-    grid-column-start: 1;
-    grid-column-end: 5;
-    grid-row-start: 7;
-    grid-row-end: 8;
-    background-color: yellow;
+    background-color: #e6e6e6;
+    border-radius: 30px;
+    margin-bottom: 5px;
+    padding: 0 50px 0 50px;
   }
 
   .border {
@@ -28,9 +20,43 @@
   }
 
   .numb-btn {
-
+    background-color: #cdcfd1;
+    border-radius: 30px;
+    border: 1px solid grey;
+    text-align: center;
+    padding-top: 35px;
+    margin: 2px 2px 2px 2px;
+    box-shadow: 1px 1px grey;
+    cursor: pointer;
   }
 
   .operand-btn {
+    background-color: #8a9199;
+    border: 1px solid grey;
+    box-shadow: 1px 1px grey;
+    border-radius: 30px;
+    text-align: center;
+    padding-top: 35px;
+    margin: 2px 2px 2px 2px;
+    cursor: pointer;
+  }
 
+  .clear-btn {
+    text-align: center;
+    border: 1px solid grey;
+    box-shadow: 1px 1px grey;
+    background-color: #d63a3a;
+    font-size: 50px;
+    border-radius: 30px;
+    margin: 2px 2px 2px 2px;
+    padding-top: 20px;
+    cursor: pointer;
+  }
+
+  #line {
+    width: 100%;
+    background-color: black;
+    height: 1px;
+    position: relative;
+    top: 125px;
   }
