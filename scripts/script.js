@@ -20,6 +20,9 @@ function divide(a, b)
 
 const container = document.querySelector(".container");
 const buttons = Array.from(container.querySelectorAll("div"));
+const numberDisplay = document.querySelector("#inner-display");
+let mathString = "";
+let operandUsed = true;
 
 buttons.forEach(btn => {
     btn.addEventListener("click", (e) => {        
@@ -60,7 +63,7 @@ buttons.forEach(btn => {
                 clearClicked();
                 break;
             case ".":
-                numberClicked(btnClicked);
+                operandClicked(btnClicked);
                 break;
             case "=":
                 operandClicked(btnClicked);
@@ -82,20 +85,57 @@ buttons.forEach(btn => {
     })
 });
 
+let firstNumber = "", secondNumber, operandChosen;
+
 function numberClicked(number)
 {
-    console.log(number);
+    operandUsed = false;
+    mathString += number;
+    fillDisplay();
 }
 
 function clearClicked()
 {
-    console.log("clear clicked");
+    operandUsed = false;
+    mathString = "";
+    fillDisplay();
 }
 
 function operandClicked(operand)
 {
-    console.log(operand);
-    
+    if(firstNumber == "")
+    {
+        firstNumber = mathString;
+        operandChosen = operand;
+    }   
+
+    if(mathString.length < 1 || operandUsed == true) 
+    {        
+        return;
+    }
+    else if (operand == "=") solveMath();
+    else
+    {
+        operandUsed = true;
+        //mathString += " " + operand + " ";
+        mathString += operand;
+        fillDisplay();
+    }
+}
+
+function fillDisplay()
+{
+    //Need to check for string length to adjust font size
+    numberDisplay.textContent = mathString;
+}
+
+function solveMath()
+{
+    console.log("KAD ");
+    console.log(mathString.split(operandChosen));
+    //Change the mathString to the answer
+    fillDisplay();
+
 }
     // const category = document.querySelector(".mw-category");
     // const links = Array.from(category.querySelectorAll("a"));
