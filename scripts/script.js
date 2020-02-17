@@ -22,8 +22,9 @@ const container = document.querySelector(".container");
 const buttons = Array.from(container.querySelectorAll("div"));
 const numberDisplay = document.querySelector("#inner-display");
 let mathString = "";
-let operandUsed = true;
+let operandUsed = true, equalUsed = false;
 let mathArray = [];
+let solvedArray = [];
 let arrayIndex = 0;
 let splitString = "";
 
@@ -90,6 +91,8 @@ buttons.forEach(btn => {
 
 function numberClicked(number)
 {
+    if(equalUsed) mathString = "";
+    equalUsed = false;
     console.table(mathArray);
     operandUsed = false;
     mathString += number;
@@ -97,17 +100,10 @@ function numberClicked(number)
     fillDisplay();
 }
 
-function clearClicked()
-{
-    operandUsed = false;
-    mathString = "";
-    splitString = "";
-    mathArray = [];
-    fillDisplay();
-}
-
 function operandClicked(operand)
 {
+    if(equalUsed) return;
+    equalUsed = false;
     if(mathString.length < 1 || operandUsed == true) 
     {        
         return;
@@ -131,25 +127,77 @@ function operandClicked(operand)
             mathArray.push(operand);
             splitString = "";
         }
-
     }
 }
 
 function fillDisplay()
 {
-    //Need to check for string length to adjust font size
     numberDisplay.textContent = mathString;
+}
+
+function clearClicked()
+{
+    operandUsed = false;
+    mathString = "";
+    splitString = "";
+    mathArray = [];
+    fillDisplay();
 }
 
 function solveMath()
 {
-    //Change the mathString to the answer
+    operandUsed = true;
+    if(equalUsed) return;
+    equalUsed = true;
+    mathArray.push(splitString);
+    solveAllMulDiv();
+    solveNonMulDiv();
+    console.log(mathString);
+    splitString = "";
+    mathArray = [];
     fillDisplay();
-
 }
-    // const category = document.querySelector(".mw-category");
-    // const links = Array.from(category.querySelectorAll("a"));
 
-    // const de = links
-    //             .map(link => link.textContent)
-    //             .filter(streetName => streetName.includes("de"));
+function solveAllMulDiv()
+{
+    if(mathArray[mathArray.length - 1] == "+" || mathArray[mathArray.length - 1] == "-" 
+    || mathArray[mathArray.length - 1] == "*" || mathArray[mathArray.length - 1] == "/") mathArray.pop();
+    for(let i = 1; i < mathArray.length - 1; i += 2)
+    {
+        if(mathArray.length - 1 == i) break;
+        if(mathArray[i] == "/")
+        {
+            if(mathArray[i+1] == 0)
+            {
+                alert("Cant divide by zero");
+                clearClicked();
+            }
+            mathArray[i+1] = divide(mathArray[i-1], mathArray[i+1]);
+            mathArray[i-1] = mathArray[i+1]
+        }
+        else if(mathArray[i] == "*")
+        {
+            mathArray[i+1] = multiply(mathArray[i-1], mathArray[i+1]);
+            mathArray[i-1] = mathArray[i+1]
+        }
+    }
+}
+
+function solveNonMulDiv()
+{
+    let temp;
+    for(let i = 1; i < mathArray.length - 1; i += 2)
+    {
+        if(mathArray.length - 1 == i) break;
+
+        if(mathArray[i] == "+")temp = parseFloat(mathArray[i-1]) + parseFloat(mathArray[i+1]);     
+        else if(mathArray[i] == "-") temp = mathArray[i-1] - mathArray[i+1];
+        
+        if(mathArray[i] == "/" || mathArray[i] == "*")
+        {
+            mathArray[i+1] = mathArray[i-1];
+        }
+        else mathArray[i+1] = temp;
+    }
+    mathString = mathArray[mathArray.length - 1];
+}
