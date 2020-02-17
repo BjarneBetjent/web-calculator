@@ -102,6 +102,7 @@ function clearClicked()
     operandUsed = false;
     mathString = "";
     splitString = "";
+    mathArray = [];
     fillDisplay();
 }
 
@@ -119,6 +120,8 @@ function operandClicked(operand)
         {
             if(splitString.includes(".")) return;
             splitString += operand;
+            mathString += operand;
+            fillDisplay();
         }
         else
         {
