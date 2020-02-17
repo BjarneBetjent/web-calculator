@@ -23,6 +23,9 @@ const buttons = Array.from(container.querySelectorAll("div"));
 const numberDisplay = document.querySelector("#inner-display");
 let mathString = "";
 let operandUsed = true;
+let mathArray = [];
+let arrayIndex = 0;
+let splitString = "";
 
 buttons.forEach(btn => {
     btn.addEventListener("click", (e) => {        
@@ -85,12 +88,12 @@ buttons.forEach(btn => {
     })
 });
 
-let firstNumber = "", secondNumber, operandChosen;
-
 function numberClicked(number)
 {
+    console.table(mathArray);
     operandUsed = false;
     mathString += number;
+    splitString += number;
     fillDisplay();
 }
 
@@ -98,17 +101,12 @@ function clearClicked()
 {
     operandUsed = false;
     mathString = "";
+    splitString = "";
     fillDisplay();
 }
 
 function operandClicked(operand)
 {
-    if(firstNumber == "")
-    {
-        firstNumber = mathString;
-        operandChosen = operand;
-    }   
-
     if(mathString.length < 1 || operandUsed == true) 
     {        
         return;
@@ -116,10 +114,21 @@ function operandClicked(operand)
     else if (operand == "=") solveMath();
     else
     {
-        operandUsed = true;
-        //mathString += " " + operand + " ";
-        mathString += operand;
-        fillDisplay();
+        operandUsed = true;        
+        if(operand == ".") 
+        {
+            if(splitString.includes(".")) return;
+            splitString += operand;
+        }
+        else
+        {
+            mathString += operand;
+            fillDisplay();
+            mathArray.push(splitString);
+            mathArray.push(operand);
+            splitString = "";
+        }
+
     }
 }
 
@@ -131,8 +140,6 @@ function fillDisplay()
 
 function solveMath()
 {
-    console.log("KAD ");
-    console.log(mathString.split(operandChosen));
     //Change the mathString to the answer
     fillDisplay();
 
