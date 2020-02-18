@@ -199,5 +199,5 @@ function solveNonMulDiv()
         }
         else mathArray[i+1] = temp;
     }
-    mathString = mathArray[mathArray.length - 1];
+    mathString = parseFloat(mathArray[mathArray.length - 1]).toFixed(1).replace(/[.,]0$/, "");
 }
